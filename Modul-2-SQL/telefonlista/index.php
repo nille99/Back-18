@@ -16,40 +16,21 @@
 
 
 <h1>SQL Konaktformulär</h1>
+<h2>Telefonlista</h2>
 <?php
-$dbHost =
-"localhost" ;
-$dbUser =
-"root" ;
-$dbPwd =
-"root" ;
-$dbName = "telefonlista" ;
-$connection = mysqli_connect($dbHost, $dbUser, $dbPwd, $dbName);
-if (!$connection) {
-echo "Error: Unable to connect to MySQL<br>";
-echo "<br>Debugging error: " . mysqli_connect_error();
-exit;
-}
+// Logga in i databasen
+// OBS! Vi får tillbaka en $connection
+require_once('connect.php');
+
+// Skapa en SQL-sats
+$query = "SELECT * FROM kontakt"; 
+// Exekvera SQL-satsen
+$table = mysqli_query($connection , $query) 
+          or die(mysqli_error($connection)) ;
+
+
 // Tips: Lägg till denna rad för att lösa problem med svenska tecken.
-mysqli_set_charset($connection, "utf8");
-
-$query ="SELECT * FROM kontakt";
-$table = mysqli_query($connection,$query)
-or die(mysqli_error($connection));
-echo "<table border='1'><tr>";
-echo "<th>Namn</th><th>Telefon</th></tr>";
-while($row = $table->fetch_assoc()){
-    echo "<tr>
-    <td>" . $row['namn'] . "</td>
-    <td>" . $row['telefon'] . "</td>
-    <td>
-    <a href='delete.php?telefon=" . $row['telefon'] . "'
-    class='btn btn-outline-danger'>Ta bort</a>
-    </td>
-    </tr>";
-}
-echo "</table>";
-
+ //mysqli_set_charset($table, "utf8");
 ?>
 <form class="form-inline my-3" method="post" action="insert.php" >
 
@@ -62,6 +43,28 @@ echo "</table>";
 <button type="submit" class="btn btn-outline-primary">Lägg till</button>
 </form>
 
+
+<?php
+
+echo "<table border='1'><tr>";
+echo "<th>Namn</th><th>Telefon</th><th>Ta bort</th><th>Ändra</th></tr>";
+while($row = $table->fetch_assoc()){
+    echo "<tr>
+    <td>" . $row['namn'] . "</td>
+    <td>" . $row['telefon'] . "</td>
+    <td>
+    <a href='delete.php?telefon=" . $row['telefon'] . "'
+    class='btn btn-outline-danger'>Ta bort</a>
+    </td>
+    <td>
+    <a href='edit.php?telefon=" . $row['telefon'] . "'
+    class='btn btn-outline-danger'>Ändrat</a>
+    </td>
+    </tr>";
+}
+echo "</table>";
+
+?>
 Copyright &copy; <?php echo date("Y"); ?> 
 &bull;Niklas Säwensten
 

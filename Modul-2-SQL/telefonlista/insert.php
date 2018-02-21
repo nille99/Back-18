@@ -1,26 +1,30 @@
 <?php
-$dbHost =
-"localhost" ;
-$dbUser =
-"root" ;
-$dbPwd =
-"root" ;
-$dbName = "telefonlista" ;
-$connection = mysqli_connect($dbHost, $dbUser, $dbPwd, $dbName);
-if (!$connection) {
-echo "Error: Unable to connect to MySQL<br>";
-echo "<br>Debugging error: " . mysqli_connect_error();
-exit;
+// Hämta innehållet i filen connect.php
+// En enda gång (ONCE)
+// require visar ett felmeddelande om filen saknas
+require_once('connect.php');
+
+// Hämta data från POST-Arrayen
+echo "<pre>";
+print_r($_POST);
+echo "</pre>";
+
+if(isset($_POST['name'])){
+    $name    = $_POST['name'];
 }
-// Tips: Lägg till denna rad för att lösa problem med svenska tecken.
-mysqli_set_charset($connection, "utf8");
+if(isset($_POST['telefon'])){
+    $telefon = $_POST['telefon'];
+}
 
-$namn = $_POST['name'];
-$telefon = $_POST['telefon'];
-$sql="INSERT INTO kontakt VALUES ('$namn', '$telefon')";
-mysqli_query($connection, $sql) or die(mysqli_error($connection));
-// Gå till filen index.php
+// Förberedd en SQL-sats
+$sql = "INSERT INTO kontakt VALUES ('$name' , '$telefon')";
+
+// Exekvera (kör) SQL-satsen
+mysqli_query($connection , $sql) or die(mysqli_error($connection));
+
+echo "<h1>$name har nu lagts till databasen</h1>";
+
+// Gå till startsidan (index.php)
 header('Location: index.php');
-
 
 ?>

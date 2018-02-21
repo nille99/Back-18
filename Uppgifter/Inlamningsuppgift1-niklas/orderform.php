@@ -6,13 +6,16 @@ include 'header.php';
 
 if(isset($_GET['vara']) ) {
 
+    // Hämta data från index sidan via metoder get
     $vara = htmlspecialchars($_GET['vara']);
     $vara = str_replace("_"," ",$vara);
     $pris = htmlspecialchars($_GET['pris']);
     $bild = htmlspecialchars($_GET['bild']);
+    //Printa ut den valda varan info
     echo "<h1>$vara</h1>";
     echo "<p>Pris: $pris</p>";
     echo "<img src='images/",$bild,"' class='rounded d-block mx-auto' alt='",$vara,"'>";
+    //Anroppa formuläret
     include 'form.php';
 }
 

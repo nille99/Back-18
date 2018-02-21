@@ -9,7 +9,8 @@ include 'header.php';
 
 
 <?php
-
+//Array varor innehåller alla produkter. 
+//(Namn på varan som skickas med url, bild adress, pris, namn på varan)
 $Varor = array
   (
   array("Ford_Model_A","fordmodela.jpg","4000kr","Ford Model A"),
@@ -23,6 +24,7 @@ $Varor = array
 
 
 <?php
+//Printar ut innehållet för vare vara
 for($i=0 ; $i<count($Varor) ; $i++ ){
     echo "<div class='col-md-4'>";
     echo "<h3>",$Varor[$i][3],"</h3>";

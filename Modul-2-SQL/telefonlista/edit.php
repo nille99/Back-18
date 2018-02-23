@@ -34,30 +34,27 @@ $telefon = $_GET['telefon'];
 
 // Skapa en SQL-sats
 $query = "SELECT * FROM kontakt WHERE telefon='$telefon' ";
-echo $query;
 
+// Kör SQL-satsen
 
-$table = mysqli_query($connection , $query)  or die(mysqli_error($connection)) ;
-          while($row = $table->fetch_assoc()){
-            echo $row['namn'];
-            echo $row['telefon'];
-          }
-// Exekvera SQL-satsen
-// mysqli_query($connection , $query) or die(mysqli_error($connection)) ;
-
+$table = mysqli_query($connection , $query)  
+or die(mysqli_error($connection)) ;
 
 
 
 ?>
-<form class="form-inline my-3" method="post" action="insert.php" >
-
+<form class="form-inline my-3" method="post" action="change.php" >
+<?php while($row = $table->fetch_assoc()) : ?>
 <label for="name">Namn </label>
-<input type="text" value="<?php echo $query['namn']; ?>" class="form-control mx-2" id="name" name="name">
+<input type="text" value="<?php echo $row['namn']; ?>" class="form-control mx-2" id="name" name="name">
 
 <label for="telefon">Telefon </label>
-<input type="text" value="<?php echo $query['telefon']; ?>" class="form-control mx-2" id="telefon" name="telefon">
+<input type="text" value="<?php echo $row['telefon']; ?>" class="form-control mx-2" id="telefon" name="telefon">
+
+<?php endwhile; ?>
 
 <button type="submit" class="btn btn-outline-primary">Ändra</button>
+
 </form>
 
 Copyright &copy; <?php echo date("Y"); ?> 
